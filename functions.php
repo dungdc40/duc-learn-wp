@@ -88,17 +88,10 @@ function var_sc()
 }
 add_shortcode('debugcode', 'var_sc');
 
-function custom_flat_rate_cost_calculation( $rates, $package )
-{
-    $cart_count = WC()->cart->get_cart_contents_count();
-
-    if( $cart_count > 0 ){
-        foreach($rates as $rate_key => $rate_values){
-            if ( 'flat_rate' === $rate_values->method_id ) {
-                $rates[$rate_key]->cost = number_format(777, 2);
-            }
-        }
-    }
-    return $rates;
+function custom_fee() {
+    if (is_admin() && !defined('DOING_AJAX')) {
+		return;
+	}
+	WC()->cart->add_fee(__('Insurance Fee', 'txtdomain'), 10);
 }
-add_filter('woocommerce_package_rates', 'custom_flat_rate_cost_calculation', 10, 2);
+add_action('woocommerce_cart_calculate_fees', 'custom_fee');
