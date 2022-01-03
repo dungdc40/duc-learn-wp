@@ -66,11 +66,10 @@ function get_ip_address()
                 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
                     return $ip;
                 }
-                else return 'Not detected';
             }
         }
-        else return 'N/A';
     }
+    return 'N/A';
 }
 function save_user_ip_address($user_login, $user)
 {
